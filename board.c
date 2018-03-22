@@ -17,8 +17,8 @@ int **load_board_from_file(char *filename, int *rows, int *columns){
     int x, y, i, j, value;
     f = fopen(filename, "r");
     if (f == NULL){
-        printf("Can't open file!");
-        return -1;
+        printf("Nie mogę otworzyć pliku!");
+        return NULL;
     }
     fscanf(f, "%d", &x);
     fscanf(f, "%d", &y);

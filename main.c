@@ -25,6 +25,29 @@ int main(int argc, char **argv)
 	signal(SIGINT, stop);
 
 	for (i = 0; i < argc; i++){
+		if (strcmp(argv[i], "-h") == 0){
+			printf("Dostępne opcje: \
+			-r: losowa plansza, po tej fladze należy podać w odpowiedniej \
+			kolejności: liczbę wierszy, liczbę kolumn i wypełnienie w procentach. \
+			Przykład: -r 5 5 25 \
+			\
+			-f: wczytanie planszy z pliku o zadanej nazwie. Przykładowy format pliku: \
+			3 3 \
+			1 1 0 \
+			0 1 0 \
+			1 0 0 \
+			Przykładowe wywołanie: -f board.txt \
+			\
+			-p: tryb symulacji, w którym stan planszy zmienia się co 0.5 sekundy. \
+			\
+			-s: tryb symulacji, w którym zostanie zasymulowana liczba kroków podana jako następny argument. \
+			Przykładowe wywołanie: -s 10 \
+			\
+			Domyślnie zostanie uruchomiona symulacja krok po kroku, gdzie nowy krok jest wykonywany przy \
+			naciśnięciu dowolnego przycisku innego niż E. \
+			Aby program działał poprawnie należy podać dane wejściowe za pomocą flagi -f bądź -r.\n");
+			return 1;
+		}
 		if (strcmp(argv[i], "-r") == 0){
 			rows = atoi(argv[++i]);
 			columns = atoi(argv[++i]);
@@ -33,6 +56,9 @@ int main(int argc, char **argv)
 		}
 		else if (strcmp(argv[i], "-f") == 0){
 			board1 = load_board_from_file(argv[++i], &rows, &columns);
+			if (board1 == NULL){
+				return -1;
+			}
 		}
 		else if (strcmp(argv[i], "-p") == 0){
 			play = true;
@@ -41,30 +67,33 @@ int main(int argc, char **argv)
 			steps = true;
 			step_count = atoi(argv[++i]);
 		}
+		else {
+			printf("Użyj flagi -h.");
+		}
 	}
 
 	board2 = allocate_board(rows, columns);
     print_matrix(board1, rows, columns);
+	i = 0;
 	if (play){
 		while (run){
-			update(board1, board2, rows, columns);
-			printf("Press Ctrl+C to end.\n");
+			update(board1, board2, rows, columns, &i);
+			printf("Naciśnij Ctrl+C aby zakończyć.\n");
 			SWAP(board1, board2);
 			nanosleep((const struct timespec[]){{0, 500000000L}}, NULL);
 		}
-		printf("Ending game...\n");
+		printf("Kończę grę...\n");
 	}
 	else if (steps){
 		for (i = 0; i < step_count; i++){
-			printf("Step#%d:\n", i + 1);
-			update(board1, board2, rows, columns);
+			update(board1, board2, rows, columns, &i);
 			SWAP(board1, board2);
 		}
 	}
 	else {
 		while (true){
-			update(board1, board2, rows, columns);
-			printf("Press e to end.\n");
+			update(board1, board2, rows, columns, &i);
+			printf("Naciśnij e aby zakończyć.\n");
 			c = getchar();
 			if (c == 'e'){
 				break;
