@@ -24,6 +24,9 @@ int main(int argc, char **argv)
 
 	signal(SIGINT, stop);
 
+<<<<<<< HEAD
+	for (i = 1; i < argc; i++){
+=======
 	for (i = 0; i < argc; i++){
 		if (strcmp(argv[i], "-h") == 0){
 			printf("Dostępne opcje: \
@@ -48,6 +51,7 @@ int main(int argc, char **argv)
 			Aby program działał poprawnie należy podać dane wejściowe za pomocą flagi -f bądź -r.\n");
 			return 1;
 		}
+>>>>>>> b0dddd4d72ee19c08264b0f202734582591f21f3
 		if (strcmp(argv[i], "-r") == 0){
 			rows = atoi(argv[++i]);
 			columns = atoi(argv[++i]);
