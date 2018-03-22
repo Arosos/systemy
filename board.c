@@ -57,10 +57,9 @@ int **random_board(int x, int y, float random_fill){
 
 int print_matrix(int **board, int x, int y){
     int i, j;
-    printf("Board:\n");
     for (i = 0; i < x; i++){
         for (j = 0; j < y; j++){
-            printf("%d ", board[i][j]);
+            printf("%d", board[i][j]);
         }
         printf("\n");
     }
