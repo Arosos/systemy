@@ -22,7 +22,7 @@ int update(int **old_board, int **new_board, int x, int y, int *step){
             }
         }
     }
-	printf("Krok#%d:\n", *step++);
+	printf("Krok#%d:\n", (*step)++);
     print_matrix(new_board, x, y);
 }
 
