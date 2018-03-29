@@ -1,6 +1,6 @@
 #include "board.h"
 
-int update(int **old_board, int **new_board, int x, int y, int *step){
+int update(int **old_board, int **new_board, int x, int y, int i){
     int i, j, count;
     for (i = 0; i < x; i++){
         for (j = 0; j < y; j++){
@@ -22,7 +22,7 @@ int update(int **old_board, int **new_board, int x, int y, int *step){
             }
         }
     }
-	printf("Krok#%d:\n", (*step)++);
+	printf("Krok#%d:\n", i);
     print_matrix(new_board, x, y);
 }
 

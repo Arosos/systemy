@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 	i = 0;
 	if (play){
 		while (run){
-			update(board1, board2, rows, columns, &i);
+			update(board1, board2, rows, columns, i++);
 			printf("Naciśnij Ctrl+C aby zakończyć.\n");
 			SWAP(board1, board2);
 			nanosleep((const struct timespec[]){{0, 500000000L}}, NULL);
@@ -87,13 +87,13 @@ int main(int argc, char **argv)
 	}
 	else if (steps){
 		for (i = 0; i < step_count; i++){
-			update(board1, board2, rows, columns, &i);
+			update(board1, board2, rows, columns, i);
 			SWAP(board1, board2);
 		}
 	}
 	else {
 		while (true){
-			update(board1, board2, rows, columns, &i);
+			update(board1, board2, rows, columns, i++);
 			printf("Naciśnij e aby zakończyć.\n");
 			c = getchar();
 			if (c == 'e'){
